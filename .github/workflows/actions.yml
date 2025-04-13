@@ -8,7 +8,7 @@ on:
   # Se ejecuta cuando se hace un 'push' (subida de código) a las ramas especificadas.
   push:
     # Lista de ramas que activarán el workflow en un 'push'. Aquí: 'main' y 'dev'.
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev","pruebasgit" ]
   # Se ejecuta cuando se crea o actualiza un 'pull request' dirigido a las ramas especificadas.
   pull_request:
     # Lista de ramas *destino* del pull request que activarán el workflow. Aquí: 'main' y 'dev'.
