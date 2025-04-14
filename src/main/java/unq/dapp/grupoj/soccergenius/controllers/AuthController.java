@@ -1,21 +1,24 @@
-package unq.dapp.grupoj.SoccerGenius.controllers;
+package unq.dapp.grupoj.soccergenius.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.AuthResponse;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.LoginCredentials;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.RegisterFormDTO;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.UserDTO;
-import unq.dapp.grupoj.SoccerGenius.services.implementation.AuthService;
+import unq.dapp.grupoj.soccergenius.model.DTO.AuthResponse;
+import unq.dapp.grupoj.soccergenius.model.DTO.LoginCredentials;
+import unq.dapp.grupoj.soccergenius.model.DTO.RegisterFormDTO;
+import unq.dapp.grupoj.soccergenius.model.DTO.UserDTO;
+import unq.dapp.grupoj.soccergenius.services.implementation.AuthService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired private AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/register")
     @Operation(summary = "Register a new user and return a JWT token")

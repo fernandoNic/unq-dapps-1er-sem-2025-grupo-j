@@ -1,24 +1,28 @@
-package unq.dapp.grupoj.SoccerGenius.services.implementation;
+package unq.dapp.grupoj.soccergenius.services.implementation;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import unq.dapp.grupoj.SoccerGenius.exceptions.AlreadyUsedEmail;
-import unq.dapp.grupoj.SoccerGenius.mappers.Mapper;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.AuthResponse;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.LoginCredentials;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.RegisterFormDTO;
-import unq.dapp.grupoj.SoccerGenius.model.User;
-import unq.dapp.grupoj.SoccerGenius.repository.UsersRepository;
-import unq.dapp.grupoj.SoccerGenius.security.JwtTokenProvider;
+import unq.dapp.grupoj.soccergenius.exceptions.AlreadyUsedEmail;
+import unq.dapp.grupoj.soccergenius.mappers.Mapper;
+import unq.dapp.grupoj.soccergenius.model.DTO.AuthResponse;
+import unq.dapp.grupoj.soccergenius.model.DTO.LoginCredentials;
+import unq.dapp.grupoj.soccergenius.model.DTO.RegisterFormDTO;
+import unq.dapp.grupoj.soccergenius.model.User;
+import unq.dapp.grupoj.soccergenius.repository.UsersRepository;
+import unq.dapp.grupoj.soccergenius.security.JwtTokenProvider;
 
 @Service
 public class AuthService {
-    @Autowired private UsersRepository usersRepository;
-    @Autowired private Mapper mapper;
+    private final UsersRepository usersRepository;
+    private final Mapper mapper;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public AuthService(UsersRepository usersRepository, Mapper mapper) {
+        this.usersRepository = usersRepository;
+        this.mapper = mapper;
+    }
 
 
     public AuthResponse register(RegisterFormDTO registerData) {
