@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.exceptions.handlers;
+package unq.dapp.grupoj.soccergenius.exceptions.handlers;
 
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
-import unq.dapp.grupoj.SoccerGenius.exceptions.AlreadyUsedEmail;
+import unq.dapp.grupoj.soccergenius.exceptions.AlreadyUsedEmail;
 
 import java.util.HashMap;
 import java.util.Map;

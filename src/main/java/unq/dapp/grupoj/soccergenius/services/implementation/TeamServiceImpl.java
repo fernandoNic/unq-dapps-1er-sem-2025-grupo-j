@@ -1,9 +1,9 @@
-package unq.dapp.grupoj.SoccerGenius.services.implementation;
+package unq.dapp.grupoj.soccergenius.services.implementation;
 
 import org.springframework.stereotype.Service;
-import unq.dapp.grupoj.SoccerGenius.model.Player;
-import unq.dapp.grupoj.SoccerGenius.services.TeamService;
-import unq.dapp.grupoj.SoccerGenius.services.WebScrapingService;
+import unq.dapp.grupoj.soccergenius.model.Player;
+import unq.dapp.grupoj.soccergenius.services.TeamService;
+import unq.dapp.grupoj.soccergenius.services.WebScrapingService;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package unq.dapp.grupoj.SoccerGenius.mappers;
+package unq.dapp.grupoj.soccergenius.mappers;
 
 import org.springframework.stereotype.Component;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.RegisterFormDTO;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.UserDTO;
-import unq.dapp.grupoj.SoccerGenius.model.User;
+import unq.dapp.grupoj.soccergenius.model.DTO.RegisterFormDTO;
+import unq.dapp.grupoj.soccergenius.model.DTO.UserDTO;
+import unq.dapp.grupoj.soccergenius.model.User;
 
 @Component
 public class Mapper {

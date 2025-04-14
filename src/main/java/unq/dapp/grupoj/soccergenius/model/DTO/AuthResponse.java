@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.model.DTO;
+package unq.dapp.grupoj.soccergenius.model.DTO;
 
 public class AuthResponse {
     private final UserDTO user;

@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.controllers;
+package unq.dapp.grupoj.soccergenius.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,18 +8,21 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import unq.dapp.grupoj.SoccerGenius.exceptions.AlreadyUsedEmail;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.AuthResponse;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.LoginCredentials;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.RegisterFormDTO;
-import unq.dapp.grupoj.SoccerGenius.model.DTO.UserDTO;
-import unq.dapp.grupoj.SoccerGenius.services.implementation.AuthService;
+import unq.dapp.grupoj.soccergenius.exceptions.AlreadyUsedEmail;
+import unq.dapp.grupoj.soccergenius.model.DTO.AuthResponse;
+import unq.dapp.grupoj.soccergenius.model.DTO.LoginCredentials;
+import unq.dapp.grupoj.soccergenius.model.DTO.RegisterFormDTO;
+import unq.dapp.grupoj.soccergenius.model.DTO.UserDTO;
+import unq.dapp.grupoj.soccergenius.services.implementation.AuthService;
+
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+
 
 @WebMvcTest(AuthController.class)
 class AuthControllerTest {

@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.model;
+package unq.dapp.grupoj.soccergenius.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

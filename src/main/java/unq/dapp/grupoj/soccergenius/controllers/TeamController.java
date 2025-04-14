@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.controllers;
+package unq.dapp.grupoj.soccergenius.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import unq.dapp.grupoj.SoccerGenius.model.Player;
-import unq.dapp.grupoj.SoccerGenius.services.TeamService;
+import unq.dapp.grupoj.soccergenius.model.Player;
+import unq.dapp.grupoj.soccergenius.services.TeamService;
 
 import java.util.List;
 

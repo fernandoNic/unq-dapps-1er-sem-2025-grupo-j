@@ -1,6 +1,6 @@
-package unq.dapp.grupoj.SoccerGenius.services;
+package unq.dapp.grupoj.soccergenius.services;
 
-import unq.dapp.grupoj.SoccerGenius.model.Player;
+import unq.dapp.grupoj.soccergenius.model.Player;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.exceptions;
+package unq.dapp.grupoj.soccergenius.exceptions;
 
 public class AlreadyUsedEmail extends RuntimeException {
     public AlreadyUsedEmail(String message) {

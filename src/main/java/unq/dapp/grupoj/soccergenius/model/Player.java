@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.model;
+package unq.dapp.grupoj.soccergenius.model;
 
 import lombok.Getter;
 import lombok.Setter;
