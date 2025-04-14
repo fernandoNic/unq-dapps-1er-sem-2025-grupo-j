@@ -9,10 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import unq.dapp.grupoj.soccergenius.exceptions.AlreadyUsedEmail;
-import unq.dapp.grupoj.soccergenius.model.DTO.AuthResponse;
-import unq.dapp.grupoj.soccergenius.model.DTO.LoginCredentials;
-import unq.dapp.grupoj.soccergenius.model.DTO.RegisterFormDTO;
-import unq.dapp.grupoj.soccergenius.model.DTO.UserDTO;
+import unq.dapp.grupoj.soccergenius.model.dtos.AuthResponse;
+import unq.dapp.grupoj.soccergenius.model.dtos.LoginCredentials;
+import unq.dapp.grupoj.soccergenius.model.dtos.RegisterFormDTO;
+import unq.dapp.grupoj.soccergenius.model.dtos.UserDTO;
 import unq.dapp.grupoj.soccergenius.services.implementation.AuthService;
 
 import static org.hamcrest.Matchers.is;

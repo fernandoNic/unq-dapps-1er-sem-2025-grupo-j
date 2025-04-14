@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.soccergenius.model.DTO;
+package unq.dapp.grupoj.soccergenius.model.dtos;
 
 public class AuthResponse {
     private final UserDTO user;
