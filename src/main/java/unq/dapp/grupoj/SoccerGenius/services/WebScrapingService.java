@@ -16,17 +16,12 @@ import java.util.List;
 
 @Service
 public class WebScrapingService {
-    private String URL = "https://es.whoscored.com/search/?t=";
+    private static final String URL        = "https://es.whoscored.com/search/?t=";
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
 
-    public List<Player> scrapeWebsite(String teamName) {
+    public List<Player> scrapeWebsite(String teamName, String country) {
         WebDriverManager.chromedriver().setup();
-
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
-        options.addArguments("--disable-gpu");
-        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
-
-        WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = createWebDriver();
 
         List<Player> scrapedData = new ArrayList<>();
 
@@ -35,8 +30,23 @@ public class WebScrapingService {
             driver.navigate().to(urlTMP);
 
             WebElement divResult = driver.findElement(By.className("search-result"));
-            WebElement table = divResult.findElement(By.xpath("./*[2]")).findElement(By.tagName("tbody"));
-            String teamUrl = table.findElement(By.xpath("./*[2]")).findElement(By.tagName("td")).findElement(By.tagName("a")).getAttribute("href");
+            WebElement teamsTable = divResult.findElement(By.xpath("./table[1]"));
+            WebElement tbody = teamsTable.findElement(By.tagName("tbody"));
+            List<WebElement> teamsList = tbody.findElements(By.xpath("./tr[position()>1]"));
+
+            String teamUrl = "";
+            for (WebElement team : teamsList) {
+                WebElement linkEquipo = team.findElement(By.xpath("./td[1]/a"));
+                String teamNameSource = linkEquipo.getText();
+
+                WebElement spanPais = team.findElement(By.xpath("./td[2]/span"));
+                String countryName = spanPais.getText();
+
+                if (teamNameSource.toLowerCase().contains(teamName) && countryName.toLowerCase().equals(country.toLowerCase())){
+                    teamUrl = linkEquipo.getAttribute("href");
+                    break;
+                }
+            }
 
             driver.navigate().to(teamUrl);
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -55,9 +65,19 @@ public class WebScrapingService {
                 scrapedData.add(p);
             }
         } finally {
-            // Close the browser
             driver.quit();
         }
         return scrapedData;
+    }
+
+    private WebDriver createWebDriver() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new"); // Modo headless moderno
+        options.addArguments("--disable-gpu"); // Necesario a veces en headless
+        options.addArguments("--window-size=1920,1080"); // Definir tamaño puede ayudar
+        options.addArguments("--no-sandbox"); // A veces necesario en entornos Linux/Docker
+        options.addArguments("--disable-dev-shm-usage"); // A veces necesario en entornos Linux/Docker
+        options.addArguments("user-agent=" + USER_AGENT); // Usar constante
+        return new ChromeDriver(options);
     }
 }

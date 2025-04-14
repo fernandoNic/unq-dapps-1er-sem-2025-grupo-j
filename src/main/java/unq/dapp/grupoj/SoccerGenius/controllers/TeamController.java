@@ -21,10 +21,10 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    @GetMapping("/{teamName}/players")
+    @GetMapping("/{teamName}/{country}/players")
     @Operation(summary = "retorna información de los jugadores de un equipo, incluyendo nombre, partidos jugados, goles, asistencias y rating.")
-    public ResponseEntity<List<Player>> getTeamPlayers (@PathVariable String teamName){
-        List<Player> players = this.teamService.getTeamPlayers(teamName);
+    public ResponseEntity<List<Player>> getTeamPlayers (@PathVariable String teamName, @PathVariable String country){
+        List<Player> players = this.teamService.getTeamPlayers(teamName,country);
         return ResponseEntity.status(HttpStatus.OK).body(players);
     }
 }
