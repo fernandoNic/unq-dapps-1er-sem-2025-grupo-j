@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import unq.dapp.grupoj.soccergenius.exceptions.AlreadyUsedEmail;
+import unq.dapp.grupoj.soccergenius.exceptions.TokenVerificationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AlreadyUsedEmail.class)
     public ResponseEntity<String> handleGenericRuntime(AlreadyUsedEmail ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(TokenVerificationException.class)
+    public ResponseEntity<String> handleGenericRuntime(TokenVerificationException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }
