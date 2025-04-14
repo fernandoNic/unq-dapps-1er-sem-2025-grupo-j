@@ -1,4 +1,4 @@
-package unq.dapp.grupoj.SoccerGenius.security;
+package unq.dapp.grupoj.soccergenius.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -10,9 +10,9 @@ import java.util.Date;
 
 public class JwtTokenProvider {
 
-    private static final String SECRET = "mi_clave_secreta_segura";
+    private static final String JWT_SECRET_KEY_SOCCERGENIUS = System.getenv("JWT_SECRET_KEY_SOCCERGENIUS");
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
-    private static final Algorithm algorithm = Algorithm.HMAC256(SECRET);
+    private static final Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET_KEY_SOCCERGENIUS);
 
     public static String generateToken(Long id) {
         return JWT.create()
