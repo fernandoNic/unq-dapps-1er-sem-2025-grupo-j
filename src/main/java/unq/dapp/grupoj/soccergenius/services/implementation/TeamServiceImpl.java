@@ -17,7 +17,9 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Player> getTeamPlayers(String teamName) {
-        return this.WebScrapingService.scrapeWebsite(teamName);
+    public List<Player> getTeamPlayers(String teamName, String country) {
+        List<Player> resultSearch =  this.WebScrapingService.scrapeWebsite(teamName,country);
+
+        return resultSearch;
     }
 }
