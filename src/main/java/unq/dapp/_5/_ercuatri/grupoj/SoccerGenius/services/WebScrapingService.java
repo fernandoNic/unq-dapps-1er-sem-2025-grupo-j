@@ -16,17 +16,12 @@ import java.util.List;
 
 @Service
 public class WebScrapingService {
-    private String URL = "https://es.whoscored.com/search/?t=";
+    private static final String URL        = "https://es.whoscored.com/search/?t=";
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
 
     public List<Player> scrapeWebsite(String teamName, String country) {
         WebDriverManager.chromedriver().setup();
-
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
-        options.addArguments("--disable-gpu");
-        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
-
-        WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = createWebDriver();
 
         List<Player> scrapedData = new ArrayList<>();
 
@@ -70,9 +65,19 @@ public class WebScrapingService {
                 scrapedData.add(p);
             }
         } finally {
-            // Close the browser
             driver.quit();
         }
         return scrapedData;
+    }
+
+    private WebDriver createWebDriver() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new"); // Modo headless moderno
+        options.addArguments("--disable-gpu"); // Necesario a veces en headless
+        options.addArguments("--window-size=1920,1080"); // Definir tamaño puede ayudar
+        options.addArguments("--no-sandbox"); // A veces necesario en entornos Linux/Docker
+        options.addArguments("--disable-dev-shm-usage"); // A veces necesario en entornos Linux/Docker
+        options.addArguments("user-agent=" + USER_AGENT); // Usar constante
+        return new ChromeDriver(options);
     }
 }
