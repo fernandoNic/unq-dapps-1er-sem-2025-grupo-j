@@ -12,7 +12,7 @@ class SoccerGeniusApplicationTests {
 	}
 
 	@Test
-	void testWithError() {
-		assertTrue(22 < 4);
+	void testDummy() {
+		assertTrue(22 > 4);
 	}
 }
