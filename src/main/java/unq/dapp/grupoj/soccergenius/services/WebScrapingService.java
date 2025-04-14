@@ -42,7 +42,7 @@ public class WebScrapingService {
                 WebElement spanPais = team.findElement(By.xpath("./td[2]/span"));
                 String countryName = spanPais.getText();
 
-                if (teamNameSource.toLowerCase().contains(teamName) && countryName.toLowerCase().equals(country.toLowerCase())){
+                if (teamNameSource.toLowerCase().contains(teamName) && countryName.equalsIgnoreCase(country)){
                     teamUrl = linkEquipo.getAttribute("href");
                     break;
                 }
