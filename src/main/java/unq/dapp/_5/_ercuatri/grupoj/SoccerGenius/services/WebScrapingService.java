@@ -18,7 +18,7 @@ import java.util.List;
 public class WebScrapingService {
     private String URL = "https://es.whoscored.com/search/?t=";
 
-    public List<Player> scrapeWebsite(String teamName) {
+    public List<Player> scrapeWebsite(String teamName, String country) {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
@@ -35,8 +35,23 @@ public class WebScrapingService {
             driver.navigate().to(urlTMP);
 
             WebElement divResult = driver.findElement(By.className("search-result"));
-            WebElement table = divResult.findElement(By.xpath("./*[2]")).findElement(By.tagName("tbody"));
-            String teamUrl = table.findElement(By.xpath("./*[2]")).findElement(By.tagName("td")).findElement(By.tagName("a")).getAttribute("href");;
+            WebElement teamsTable = divResult.findElement(By.xpath("./table[1]"));
+            WebElement tbody = teamsTable.findElement(By.tagName("tbody"));
+            List<WebElement> teamsList = tbody.findElements(By.xpath("./tr[position()>1]"));
+
+            String teamUrl = "";
+            for (WebElement team : teamsList) {
+                WebElement linkEquipo = team.findElement(By.xpath("./td[1]/a"));
+                String teamNameSource = linkEquipo.getText();
+
+                WebElement spanPais = team.findElement(By.xpath("./td[2]/span"));
+                String countryName = spanPais.getText();
+
+                if (teamNameSource.toLowerCase().contains(teamName) && countryName.toLowerCase().equals(country.toLowerCase())){
+                    teamUrl = linkEquipo.getAttribute("href");
+                    break;
+                }
+            }
 
             driver.navigate().to(teamUrl);
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));

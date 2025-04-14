@@ -2,7 +2,6 @@ package unq.dapp._5._ercuatri.grupoj.SoccerGenius.services.implementation;
 
 import org.springframework.stereotype.Service;
 import unq.dapp._5._ercuatri.grupoj.SoccerGenius.model.Player;
-import unq.dapp._5._ercuatri.grupoj.SoccerGenius.model.Team;
 import unq.dapp._5._ercuatri.grupoj.SoccerGenius.services.TeamService;
 import unq.dapp._5._ercuatri.grupoj.SoccerGenius.services.WebScrapingService;
 
@@ -18,8 +17,8 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Player> getTeamPlayers(String teamName) {
-        List<Player> resultSearch =  this.WebScrapingService.scrapeWebsite(teamName);
+    public List<Player> getTeamPlayers(String teamName, String country) {
+        List<Player> resultSearch =  this.WebScrapingService.scrapeWebsite(teamName,country);
 
         return resultSearch;
     }
