@@ -19,11 +19,5 @@ public class RegisterFormDTO {
     private String email;
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
-    @NotNull(message = "Password confirmation is required")
-    private String passwordConfirmation;
-    @AssertTrue
-    private boolean passwordCoincide() {
-        return password != null && password.equals(passwordConfirmation);
-    }
 }
 

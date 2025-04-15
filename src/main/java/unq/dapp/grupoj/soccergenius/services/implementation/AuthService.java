@@ -16,12 +16,12 @@ import unq.dapp.grupoj.soccergenius.security.JwtTokenProvider;
 public class AuthService {
     private final UsersRepository usersRepository;
     private final Mapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-    public AuthService(UsersRepository usersRepository, Mapper mapper) {
+    public AuthService(UsersRepository usersRepository, Mapper mapper, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
