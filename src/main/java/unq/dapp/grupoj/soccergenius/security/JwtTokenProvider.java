@@ -3,7 +3,6 @@ package unq.dapp.grupoj.soccergenius.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import unq.dapp.grupoj.soccergenius.exceptions.TokenVerificationException;
 
@@ -27,11 +26,18 @@ public class JwtTokenProvider {
                 .sign(algorithm);
     }
 
-    public static String validateTokenAndGetUsername(String token) {
+    public static void validateToken(String token) {
         try {
+            if (token == null || token.trim().isEmpty()) {
+                throw new TokenVerificationException("Token no proporcionado");
+            }
+
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+
             JWTVerifier verifier = JWT.require(algorithm).build();
-            DecodedJWT jwt = verifier.verify(token);
-            return jwt.getSubject(); // username
+            verifier.verify(token);
         } catch (JWTVerificationException e) {
             throw new TokenVerificationException("Token inválido o expirado");
         }

@@ -59,6 +59,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TokenVerificationException.class)
     public ResponseEntity<String> handleGenericRuntime(TokenVerificationException ex) {
         logger.error("Token verification exception: {}", ex.getMessage(), ex);
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
     }
 }
