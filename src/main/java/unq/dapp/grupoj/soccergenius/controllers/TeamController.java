@@ -27,13 +27,19 @@ public class TeamController {
     @GetMapping("/{teamName}/{country}/players")
     @Operation(summary = "retorna información de los jugadores de un equipo, incluyendo nombre, partidos jugados, goles, asistencias y rating.")
     public ResponseEntity<List<Player>> getTeamPlayers (@PathVariable String teamName, @PathVariable String country){
+        long startTime = System.currentTimeMillis();
         logger.info("Request received to get players for team {} in country {}", teamName, country);
+
         try {
             List<Player> players = this.teamService.getTeamPlayers(teamName, country);
-            logger.info("Successfully retrieved {} players for team {}", players.size(), teamName);
+            long endTime = System.currentTimeMillis();
+            logger.info("Successfully retrieved {} players for team {} in {} ms",
+                    players.size(), teamName, (endTime - startTime));
             return ResponseEntity.status(HttpStatus.OK).body(players);
         } catch (Exception e) {
-            logger.error("Error fetching players for team {}: {}", teamName, e.getMessage(), e);
+            long endTime = System.currentTimeMillis();
+            logger.error("Error fetching players for team {}: {} (execution time: {} ms)",
+                    teamName, e.getMessage(), (endTime - startTime), e);
             throw e;
         }
     }
