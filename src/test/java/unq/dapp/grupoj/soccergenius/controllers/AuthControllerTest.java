@@ -143,7 +143,7 @@ class AuthControllerTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(validRegisterForm)))
                     .andExpect(status().isConflict())
-                    .andExpect(content().string("Email already in use"));
+                    .andExpect(content().string("The email john.doe@example.com is already in use."));
 
             verify(authService, times(1)).register(any(RegisterFormDTO.class));
         }
