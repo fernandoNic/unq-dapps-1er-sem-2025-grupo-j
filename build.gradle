@@ -45,4 +45,7 @@ dependencies {
 	//TESTING
 	testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.4")
 
+	//logging
+	implementation("org.springframework.boot:spring-boot-starter-logging")
+
 }
