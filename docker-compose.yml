@@ -1,0 +1,32 @@
+services:
+
+  mysql:
+    image: mysql:8.3
+    container_name: soccer_genius_mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: soccer_genius
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  api:
+    build:
+      context: .
+    container_name: soccer_genius_api
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/soccer_genius
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      JWT_SECRET_KEY_SOCCERGENIUS: ${JWT_SECRET_KEY_SOCCERGENIUS}
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:
