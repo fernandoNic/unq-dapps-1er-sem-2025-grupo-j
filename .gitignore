@@ -6,6 +6,9 @@ build/
 !**/src/test/**/build/
 *.log
 
+### DB Files ###
+*.db
+
 ### STS ###
 .apt_generated
 .classpath
