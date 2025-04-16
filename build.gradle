@@ -40,7 +40,7 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok:1.18.34'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.h2database:h2'
 
 	//TESTING
 	testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.4")

@@ -3,12 +3,12 @@ package unq.dapp.grupoj.soccergenius.mappers;
 import org.springframework.stereotype.Component;
 import unq.dapp.grupoj.soccergenius.model.dtos.RegisterFormDTO;
 import unq.dapp.grupoj.soccergenius.model.dtos.UserDTO;
-import unq.dapp.grupoj.soccergenius.model.User;
+import unq.dapp.grupoj.soccergenius.model.AppUser;
 
 @Component
 public class Mapper {
-    public User toEntity(RegisterFormDTO userDTO) {
-        return new User(
+    public AppUser toEntity(RegisterFormDTO userDTO) {
+        return new AppUser(
                 userDTO.getFirstName(),
                 userDTO.getLastName(),
                 userDTO.getEmail(),
@@ -16,7 +16,7 @@ public class Mapper {
         );
     }
 
-    public UserDTO toDTO(User user) {
-        return new UserDTO(user.getFirstName(),user.getLastName(),user.getEmail());
+    public UserDTO toDTO(AppUser appUser) {
+        return new UserDTO(appUser.getFirstName(), appUser.getLastName(), appUser.getEmail());
     }
 }
