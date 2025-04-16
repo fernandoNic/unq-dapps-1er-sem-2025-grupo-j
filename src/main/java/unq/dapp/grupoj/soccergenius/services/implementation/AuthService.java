@@ -30,12 +30,12 @@ public class AuthService {
             throw new AlreadyUsedEmail(registerData.getEmail());
         }
 
-        AppUser new_App_user = mapper.toEntity(registerData);
-        new_App_user.setPassword(passwordEncoder.encode(registerData.getPassword()));
+        AppUser new_app_user = mapper.toEntity(registerData);
+        new_app_user.setPassword(passwordEncoder.encode(registerData.getPassword()));
 
-        usersRepository.save(new_App_user);
+        usersRepository.save(new_app_user);
 
-        return new AuthResponse(mapper.toDTO(new_App_user), JwtTokenProvider.generateToken(new_App_user.getId()));
+        return new AuthResponse(mapper.toDTO(new_app_user), JwtTokenProvider.generateToken(new_app_user.getId()));
     }
 
     public AuthResponse login(LoginCredentials credentials){
