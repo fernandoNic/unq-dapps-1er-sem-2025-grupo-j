@@ -44,12 +44,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid body format");
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<String> handleGenericRuntime(RuntimeException ex) {
-        logger.error("Runtime exception: {}", ex.getMessage(), ex);
-        return ResponseEntity.status(400).body(ex.getMessage());
-    }
-
     @ExceptionHandler(AlreadyUsedEmail.class)
     public ResponseEntity<String> handleGenericRuntime(AlreadyUsedEmail ex) {
         logger.warn("Registration attempt with already used email: {}", ex.getMessage());
