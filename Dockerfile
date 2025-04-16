@@ -1,17 +1,13 @@
-# Usa una imagen base de Java (elige la versión adecuada)
-FROM eclipse-temurin:17-jdk-jammy
+FROM eclipse-temurin:21-jdk-alpine
 
-# Argumento para el nombre del JAR
-ARG JAR_FILE=target/*.jar
-
-# Establece el directorio de trabajo dentro del contenedor
+# Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el archivo JAR construido al contenedor
-COPY ${JAR_FILE} app.jar
+# Copiamos el JAR generado (asumimos que el build lo generó en /target)
+COPY build/libs/SoccerGenius-0.0.1-SNAPSHOT.jar app.jar
 
-# Expone el puerto en el que corre la aplicación (Render usará la variable PORT)
-# EXPOSE 8080 # No es estrictamente necesario en Render, pero es buena práctica
+# Exponemos el puerto que utiliza la aplicación Spring Boot
+EXPOSE 8080
 
-# Comando para ejecutar la aplicación cuando el contenedor inicie
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# Comando para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "app.jar"]
