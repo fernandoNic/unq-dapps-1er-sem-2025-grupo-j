@@ -10,9 +10,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 import unq.dapp.grupoj.soccergenius.model.Player;
+
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class WebScrapingService {
@@ -79,6 +85,20 @@ public class WebScrapingService {
         options.addArguments("--no-sandbox"); // A veces necesario en entornos Linux/Docker
         options.addArguments("--disable-dev-shm-usage"); // A veces necesario en entornos Linux/Docker
         options.addArguments("user-agent=" + USER_AGENT); // Usar constante
+
+        try {
+            // Crear un path único para el directorio de datos de usuario en /tmp
+            Path userDataDir = Paths.get("/tmp", "chrome_user_data_" + UUID.randomUUID().toString());
+            // Asegurarse de que el directorio exista (aunque Chrome a menudo lo crea)
+            Files.createDirectories(userDataDir) ;
+            // Añadir el argumento a las opciones
+            options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath().toString());
+        } catch (IOException e) {
+            System.err.println("Error al crear el directorio temporal para user-data-dir: " + e.getMessage());
+            // Considera lanzar una excepción o manejar el error como prefieras
+            // Si esto falla, el inicio de Chrome probablemente también fallará.
+            throw new RuntimeException("No se pudo crear el directorio temporal para Chrome", e);
+        }
         return new ChromeDriver(options);
     }
 }
