@@ -38,6 +38,16 @@ WORKDIR /app
 # Creamos un usuario y grupo no-root para ejecutar la aplicación (buenas prácticas de seguridad)
 RUN groupadd --system appgroup && useradd --system --gid appgroup appuser
 
+# --- Instalación de Google Chrome y dependencias ---
+# Necesario para ejecutar Selenium/WebDriver en modo headless
+# Se instala como root ANTES de cambiar al usuario 'appuser'
+RUN apt-get update && apt-get install -y wget gnupg \
+    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copiamos el JAR compilado desde la etapa de construcción 'builder'
 # Gradle normalmente pone los JARs en build/libs/
 # Asumimos que tu JAR se llama algo como 'soccergenius-0.0.1-SNAPSHOT.jar'.
@@ -56,3 +66,4 @@ EXPOSE 8080
 
 # El comando que se ejecutará cuando el contenedor inicie
 ENTRYPOINT ["java", "-jar", "/app/application.jar"]
+
