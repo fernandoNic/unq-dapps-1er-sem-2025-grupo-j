@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 import unq.dapp.grupoj.soccergenius.model.Player;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -24,10 +25,15 @@ import java.util.UUID;
 public class WebScrapingService {
     private static final String URL             = "https://es.whoscored.com/search/?t=";
     private static final String USER_AGENT      = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
-    private static final String CUSTOMCACHEPATH = "/tmp/wdm_cache";
+//    private static final String CUSTOMCACHEPATH = "/tmp/wdm_cache";
 
     public List<Player> scrapeWebsite(String teamName, String country) {
-        WebDriverManager.chromedriver().cachePath(CUSTOMCACHEPATH).setup();
+        String projectRootPath = System.getProperty("user.dir");
+        String cacheDirectoryName = ".wdm_cache";
+        String customCachePath = projectRootPath + File.separator + cacheDirectoryName;
+        WebDriverManager.chromedriver().cachePath(customCachePath).setup();
+
+//        WebDriverManager.chromedriver().cachePath(CUSTOMCACHEPATH).setup();
         WebDriver driver = createWebDriver();
 
         List<Player> scrapedData = new ArrayList<>();
@@ -88,7 +94,7 @@ public class WebScrapingService {
 
         try {
             // Crear un path único para el directorio de datos de usuario en /tmp
-            Path userDataDir = Paths.get("/tmp", "chrome_user_data_" + UUID.randomUUID().toString());
+            Path userDataDir = Paths.get("./tmp", "chrome_user_data_" + UUID.randomUUID().toString());
             // Asegurarse de que el directorio exista (aunque Chrome a menudo lo crea)
             Files.createDirectories(userDataDir) ;
             // Añadir el argumento a las opciones
