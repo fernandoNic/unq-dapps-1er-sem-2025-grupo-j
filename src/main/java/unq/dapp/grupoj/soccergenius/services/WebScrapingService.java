@@ -16,11 +16,12 @@ import java.util.List;
 
 @Service
 public class WebScrapingService {
-    private static final String URL        = "https://es.whoscored.com/search/?t=";
-    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
+    private static final String URL             = "https://es.whoscored.com/search/?t=";
+    private static final String USER_AGENT      = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
+    private static final String CUSTOMCACHEPATH = "/tmp/wdm_cache";
 
     public List<Player> scrapeWebsite(String teamName, String country) {
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().cachePath(CUSTOMCACHEPATH).setup();
         WebDriver driver = createWebDriver();
 
         List<Player> scrapedData = new ArrayList<>();
