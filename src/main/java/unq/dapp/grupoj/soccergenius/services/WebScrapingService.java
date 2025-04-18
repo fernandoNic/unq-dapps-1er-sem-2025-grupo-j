@@ -30,8 +30,22 @@ public class WebScrapingService {
     public List<Player> scrapeWebsite(String teamName, String country) {
         String projectRootPath = System.getProperty("user.dir");
         String cacheDirectoryName = ".wdm_cache";
-        String customCachePath = projectRootPath + File.separator + cacheDirectoryName;
-        WebDriverManager.chromedriver().cachePath(customCachePath).setup();
+        Path customCachePath = Paths.get(projectRootPath, cacheDirectoryName);
+        //        String customCachePath = projectRootPath + File.separator + cacheDirectoryName;
+//        WebDriverManager.chromedriver().cachePath(customCachePath).setup();
+
+        try {
+            Files.createDirectories(customCachePath);
+            WebDriverManager.chromedriver().cachePath(customCachePath.toString()).setup();
+        } catch (IOException e) {
+            System.err.println("Error al crear/configurar el directorio de caché para WebDriverManager: " + e.getMessage());
+            // Considera cómo manejar este error. ¿Debería la aplicación fallar al iniciar?
+            // Por ahora, solo imprimimos el error, pero WDM podría fallar si no puede escribir en el caché.
+            WebDriverManager.chromedriver().setup(); // Intenta configuración por defecto si falla la personalizada
+        } catch (Exception e) {
+            System.err.println("Error inesperado durante la configuración de WebDriverManager: " + e.getMessage());
+            WebDriverManager.chromedriver().setup(); // Intenta configuración por defecto
+        }
 
 //        WebDriverManager.chromedriver().cachePath(CUSTOMCACHEPATH).setup();
         WebDriver driver = createWebDriver();
@@ -92,20 +106,20 @@ public class WebScrapingService {
         options.addArguments("--disable-dev-shm-usage"); // A veces necesario en entornos Linux/Docker
         options.addArguments("user-agent=" + USER_AGENT); // Usar constante
 
-        try {
-            // Crear un path único para el directorio de datos de usuario en /tmp
-            String systemTempDir = System.getProperty("java.io.tmpdir");
-            Path userDataDir = Paths.get(systemTempDir, "chrome_user_data_" + UUID.randomUUID().toString());
-            // Asegurarse de que el directorio exista (aunque Chrome a menudo lo crea)
-            Files.createDirectories(userDataDir) ;
-            // Añadir el argumento a las opciones
-            options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath().toString());
-        } catch (IOException e) {
-            System.err.println("Error al crear el directorio temporal para user-data-dir: " + e.getMessage());
-            // Considera lanzar una excepción o manejar el error como prefieras
-            // Si esto falla, el inicio de Chrome probablemente también fallará.
-            throw new RuntimeException("No se pudo crear el directorio temporal para Chrome", e);
-        }
+//        try {
+//            // Crear un path único para el directorio de datos de usuario en /tmp
+//            String systemTempDir = System.getProperty("java.io.tmpdir");
+//            Path userDataDir = Paths.get(systemTempDir, "chrome_user_data_" + UUID.randomUUID().toString());
+//            // Asegurarse de que el directorio exista (aunque Chrome a menudo lo crea)
+//            Files.createDirectories(userDataDir) ;
+//            // Añadir el argumento a las opciones
+//            options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath().toString());
+//        } catch (IOException e) {
+//            System.err.println("Error al crear el directorio temporal para user-data-dir: " + e.getMessage());
+//            // Considera lanzar una excepción o manejar el error como prefieras
+//            // Si esto falla, el inicio de Chrome probablemente también fallará.
+//            throw new RuntimeException("No se pudo crear el directorio temporal para Chrome", e);
+//        }
         return new ChromeDriver(options);
     }
 }
