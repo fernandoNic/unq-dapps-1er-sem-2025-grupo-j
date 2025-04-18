@@ -31,6 +31,9 @@ public class WebScrapingService {
         String projectRootPath = System.getProperty("user.dir");
         String cacheDirectoryName = ".wdm_cache";
         Path customCachePath = Paths.get(projectRootPath, cacheDirectoryName);
+
+
+
         //        String customCachePath = projectRootPath + File.separator + cacheDirectoryName;
 //        WebDriverManager.chromedriver().cachePath(customCachePath).setup();
 
@@ -105,6 +108,27 @@ public class WebScrapingService {
         options.addArguments("--no-sandbox"); // A veces necesario en entornos Linux/Docker
         options.addArguments("--disable-dev-shm-usage"); // A veces necesario en entornos Linux/Docker
         options.addArguments("user-agent=" + USER_AGENT); // Usar constante
+
+
+
+
+        try {
+        Path userDataDir = null;
+        Path baseDir = Paths.get(".").toAbsolutePath().normalize(); // Obtiene /app
+        Path profilesDir = baseDir.resolve("chrome_profiles"); // Crea /app/chrome_profiles
+        Files.createDirectories(profilesDir); // Asegura que /app/chrome_profiles exista
+
+        userDataDir = profilesDir.resolve("user_data_" + UUID.randomUUID().toString());
+        // No es necesario crear userDataDir explícitamente, Chrome lo hará.
+        // Files.createDirectories(userDataDir); // Opcional
+
+        options.addArguments("--user-data-dir=" + userDataDir.toString());
+        System.out.println("Usando User Data Directory: " + userDataDir.toString());
+        }
+        catch (IOException e){
+            System.err.println("Error al configurar el directorio para user-data-dir en /app: " + e.getMessage());
+            throw new RuntimeException("No se pudo configurar el directorio para Chrome", e);
+        }
 
 //        try {
 //            // Crear un path único para el directorio de datos de usuario en /tmp
