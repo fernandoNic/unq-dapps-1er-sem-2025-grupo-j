@@ -88,7 +88,7 @@ public class WebScrapingService {
 
         try {
             // Crear un path único para el directorio de datos de usuario en /tmp
-            Path userDataDir = Paths.get("/tmp", "chrome_user_data_" + UUID.randomUUID().toString());
+            Path userDataDir = Paths.get("./tmp", "chrome_user_data_" + UUID.randomUUID().toString());
             // Asegurarse de que el directorio exista (aunque Chrome a menudo lo crea)
             Files.createDirectories(userDataDir) ;
             // Añadir el argumento a las opciones
