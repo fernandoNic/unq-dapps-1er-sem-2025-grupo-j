@@ -11,7 +11,12 @@ import unq.dapp.grupoj.soccergenius.model.Player;
 import unq.dapp.grupoj.soccergenius.security.JwtTokenProvider;
 import unq.dapp.grupoj.soccergenius.services.TeamService;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/teams")
@@ -46,8 +51,46 @@ public class TeamController {
     }
 
     @GetMapping("/locationServer")
-    public ResponseEntity<Object> getPathServerLocation(){
-        String applicationPath = System.getProperty("user.dir");
-        return ResponseEntity.ok(applicationPath);
+    public ResponseEntity<Map<String, Object>> getPathServerLocation(){
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String applicationPath = System.getProperty("user.dir");
+            response.put("applicationPath", applicationPath);
+            logger.info("Obteniendo directorios dentro de: {}", applicationPath);
+
+            File directory = new File(applicationPath);
+            List<String> subDirectories = List.of(); // Lista vacía por defecto
+
+            if (directory.exists() && directory.isDirectory()) {
+                File[] files = directory.listFiles();
+                if (files != null) {
+                    // Filtrar para obtener solo directorios y mapear a sus nombres
+                    subDirectories = Arrays.stream(files)
+                            .filter(File::isDirectory) // Filtra solo directorios
+                            .map(File::getName)        // Obtiene el nombre de cada directorio
+                            .collect(Collectors.toList()); // Recolecta en una lista
+                    logger.info("Se encontraron {} subdirectorios.", subDirectories.size());
+                } else {
+                    logger.warn("No se pudo listar el contenido del directorio: {}", applicationPath);
+                    response.put("error", "No se pudo listar el contenido del directorio.");
+                }
+            } else {
+                logger.error("La ruta {} no existe o no es un directorio.", applicationPath);
+                response.put("error", "La ruta de la aplicación no existe o no es un directorio.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            }
+
+            response.put("subDirectories", subDirectories);
+            return ResponseEntity.ok(response);
+
+        } catch (SecurityException se) {
+            logger.error("Error de seguridad al intentar acceder a {}: {}", System.getProperty("user.dir"), se.getMessage(), se);
+            response.put("error", "Permiso denegado para acceder al directorio.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        } catch (Exception e) {
+            logger.error("Error inesperado al listar directorios: {}", e.getMessage(), e);
+            response.put("error", "Ocurrió un error inesperado.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 }

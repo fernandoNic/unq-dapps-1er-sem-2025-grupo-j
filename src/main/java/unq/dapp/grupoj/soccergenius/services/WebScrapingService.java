@@ -115,7 +115,7 @@ public class WebScrapingService {
         try {
         Path userDataDir = null;
         Path baseDir = Paths.get(".").toAbsolutePath().normalize(); // Obtiene /app
-        Path profilesDir = baseDir.resolve("chrome_profiles"); // Crea /app/chrome_profiles
+        Path profilesDir = baseDir.resolve("chrome_profiles_"+ UUID.randomUUID().toString()); // Crea /app/chrome_profiles
         Files.createDirectories(profilesDir); // Asegura que /app/chrome_profiles exista
 
         userDataDir = profilesDir.resolve("user_data_" + UUID.randomUUID().toString());
