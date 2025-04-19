@@ -44,4 +44,10 @@ public class TeamController {
             throw e;
         }
     }
+
+    @GetMapping("/locationServer")
+    public ResponseEntity<Object> getPathServerLocation(){
+        String applicationPath = System.getProperty("user.dir");
+        return ResponseEntity.ok(applicationPath);
+    }
 }
